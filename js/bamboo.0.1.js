@@ -38,6 +38,7 @@ var Bamboo = (function (window, document) {
 		    menuWidth: 265,
 		    headerHeight: 50,
 		    snapThreshold: null,
+		    resize: null
 		};
 
 
@@ -89,6 +90,10 @@ var Bamboo = (function (window, document) {
 				/%/.test(this.options.snapThreshold) ?
 					Math.round(this.info.docWidth * this.options.snapThreshold.replace('%', '') / 100) :
 					this.options.snapThreshold;
+			// resize callback
+			if (this.options.resize) {
+				this.options.resize();
+			}		
 	    },
 
 	    // set layout sizes
