@@ -10,33 +10,33 @@ How to use
 ----------
 Include the Bamboo.js Script, CSS file and use the index.html as the base.
 
-    &lt;nav id="main-nav" class="navigation overflow"&gt;
-        &lt;ul&gt;
-        &lt;li&gt;&lt;a href="#"&gt;Menu item&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href="#"&gt;Menu item 2&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;/nav&gt;
-    &lt;div id="container"&gt;
-        &lt;header class="primary"&gt;
-            &lt;span class="open icon"&gt;&amp;#9776;&lt;/span&gt;
-            &lt;hgroup&gt;&lt;h1&gt;Title&lt;/h1&gt;&lt;/hgroup&gt;
-        &lt;/header&gt;
-        &lt;section id="scroller" class="overflow"&gt;
-            &lt;div id="content"&gt;
-                &lt;!-- Content goes in here --&gt;
+    <nav id="main-nav" class="navigation overflow">
+        <ul>
+        <li><a href="#">Menu item</a></li>
+        <li><a href="#">Menu item 2</a></li>
+    </ul>;
+    </nav>;
+    <div id="container">;
+        <header class="primary">;
+            <span class="open icon">&#9776;</span>
+            <hgroup><h1>Title</h1></hgroup>
+        </header>
+        <section id="scroller" class="overflow">
+            <div id="content">
+                <!-- Content goes in here -->
 
-                &lt;!-- Content ends --&gt;
-            &lt;/div&gt;
-        &lt;/section&gt;
+                <!-- Content ends -->
+            </div>
+        </section>
 
-    &lt;/div&gt;
+    </div&gt;
 
-    &lt;script src="http://code.jquery.com/jquery-2.0.0.min.js"&gt;&lt;/script&gt;
-    &lt;script src="js/bamboo.0.1.js"&gt;&lt;/script&gt;
+    <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+    <script src="js/bamboo.0.1.js"></script>
 
-    &lt;script&gt;
+    <script>
         var site = new Bamboo();
-    &lt;/script&gt;
+    </script>
 
 You can define the following properties:
 
@@ -48,6 +48,7 @@ snapThreshold: null or 0-1,
 resize: null // function to allow a callback
 
 **Example**
+
     var site = new Bamboo({
         menu: true,
         breakpoint: 768,
