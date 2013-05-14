@@ -6,6 +6,8 @@ This is a basic structural framework for responsive Web Apps that require a slid
 The burger menu button toggles the menu open and close. You can also swipe left or right to interact with the menu.
 When the browser is greater than a specified breakpoint (desktop) the menu is permanently visible on the left.
 
+This is [an example](http://www.andrewgreig.com/demo/bamboo/ "Sliding Responsive menu")
+
 How to use
 ----------
 Include the Bamboo.js Script, CSS file and use the index.html as the base.
