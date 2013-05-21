@@ -69,13 +69,18 @@ var Bamboo = (function (window, document) {
 	    tgt: null,	// menu tap target
 	    desktop: false, 
 
-	    // returns page dimensions in array
+	    // returns page dimensions in array [ width, height ]
 	    dimensions: function(){
 	    	return [this.info.docWidth, this.info.docHeight];
 	    },
-
+	    // returns the iOS header offset
+	    // read more about this further down the document
 	    offset: function(){
 	    	return offset;
+	    },
+	    //returns true or false if the device has touch capabilites	
+	    hastouch: function(){
+	    	return hasTouch;
 	    },
 
 	    // function to resize site
@@ -247,7 +252,9 @@ var Bamboo = (function (window, document) {
 		return bool;
 	}
 
-	// if iOS figure out thee address bar height offset
+	// if mobile safari figure out thee address bar height offset
+	// read the Question here: http://forum.jquery.com/topic/window-height-mobile-safari-and-the-iphone-address-bar
+	// this is the answer to the issue
 	function testOffset(){
 		var offset = 0;
 		// if safari on ios or ipod but not chrome
