@@ -33,8 +33,9 @@ var Bamboo = (function (window, document) {
 		var _this = this;
 
 		this.options = {
-			menu: true,
-			breakpoint: 768,
+		    menu: true,
+		    swipeToOpen: true,
+		    breakpoint: 768,
 		    menuWidth: 265,
 		    headerHeight: 50,
 		    snapThreshold: null,
@@ -156,7 +157,7 @@ var Bamboo = (function (window, document) {
 
 		_move: function(e) {
 			if (!this.initiated) return;
-			if (this.desktop || !this.options.menu) return; // if menu not applicable
+			if (this.desktop || !this.options.menu || !this.options.swipeToOpen) return; // if menu not applicable
 
 			$('#console').html('move')
 			var point = hasTouch ? e.originalEvent.touches[0] : e;
