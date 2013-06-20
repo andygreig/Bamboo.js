@@ -53,6 +53,7 @@ resize: null // function to allow a callback
 
     var site = new Bamboo({
         menu: true,
+        swipeToOpen: false,
         breakpoint: 768,
         menuWidth: 265,
         headerHeight: 50,
