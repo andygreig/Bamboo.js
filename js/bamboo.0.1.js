@@ -139,7 +139,6 @@ var Bamboo = (function (window, document) {
 			if (this.initiated) return;	// if already started
 			if (this.desktop || !this.options.menu) return; // if menu not applicable
 
-			$('#console').html('start')
 			var point = hasTouch ? e.originalEvent.touches[0] : e;
 
 			this.initiated = true;
@@ -159,7 +158,6 @@ var Bamboo = (function (window, document) {
 			if (!this.initiated) return;
 			if (this.desktop || !this.options.menu || !this.options.swipeToOpen) return; // if menu not applicable
 
-			$('#console').html('move')
 			var point = hasTouch ? e.originalEvent.touches[0] : e;
 			
 			this.stepsX += Math.abs(point.pageX - this.pointX);
