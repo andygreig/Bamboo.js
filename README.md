@@ -42,12 +42,12 @@ Include the Bamboo.js Script, CSS file and use the index.html as the base.
 
 You can define the following properties:
 
-menu: true/false
-breakpoint: default (768),
-menuWidth: default (265),
-headerHeight: default (50),
-snapThreshold: null or 0-1,
-resize: null // function to allow a callback
+    menu: true/false
+    breakpoint: default (768),
+    menuWidth: default (265),
+    headerHeight: default (50),
+    snapThreshold: null or 0-1,
+    resize: null // function to allow a callback
 
 **Example**
 
