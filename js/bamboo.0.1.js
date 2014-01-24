@@ -23,15 +23,9 @@ var Bamboo = (function (window, document) {
 	
 	// Events
 	resizeEvent = 'onorientationchange' in window ? 'orientationchange' : 'resize',
-	startEvent = hasTouch ? 'touchstart' : 'mousedown',
-	moveEvent = hasTouch ? 'touchmove' : 'mousemove',
-	endEvent = hasTouch ? 'touchend' : 'mouseup',
-	cancelEvent = hasTouch ? 'touchcancel' : 'mouseup',
 
 	Bamboo = function (opts) {
 		
-		var _this = this;
-
 		this.options = {
 		    menu: true,
 		    swipeToOpen: true,
@@ -52,12 +46,9 @@ var Bamboo = (function (window, document) {
 		cover = $('<div id="cover" />');
 		container.find('#scroller').append(cover);
 
-		// event listeners
+		// resize listeners
 		$(window).on(resizeEvent, this.resizeSite.bind(this) );
-		container.on(startEvent, this._start.bind(this) );
-		container.on(moveEvent, this._move.bind(this) );
-		container.on(endEvent, this._end.bind(this) );
-			
+		this._bindEvents();
 	}
 
 	Bamboo.prototype = {
@@ -69,6 +60,7 @@ var Bamboo = (function (window, document) {
 	    ox : null,	// original X
 	    tgt: null,	// menu tap target
 	    desktop: false, 
+	    isTouch: false, // check for touch in start events
 
 	    // returns page dimensions in array [ width, height ]
 	    dimensions: function(){
@@ -135,12 +127,35 @@ var Bamboo = (function (window, document) {
 		* Pseudo private methods
 		*/
 
+		_bindEvents: function(){
+			var _this = this,
+                $body = $('body');
+
+            // .bmboo defines the namespace for the event
+
+            // Start event biding
+            container.on('touchstart mousedown', function(e) {
+            	_this._start(e);
+            	// move
+                $body.on('touchmove.bmboo mousemove.bmboo', function(e) {
+                    _this._move(e);
+                });
+                // end
+                $body.on('touchend.bmboo mouseup.bmboo', function(e) {
+                    _this._end(e);
+                    // clear the move and end events
+                    $body.off('.bmboo');
+                });
+            });
+		},
+
 		_start: function(e) {
 			if (this.initiated) return;	// if already started
 			if (this.desktop || !this.options.menu) return; // if menu not applicable
+			isTouch = /touch/.test(e.type);
 
-			var point = hasTouch ? e.originalEvent.touches[0] : e;
-
+			var point = isTouch ? e.originalEvent.touches[0] : e;
+			
 			this.initiated = true;
 			this.pointX = point.pageX;
 			this.pointY = point.pageY;
@@ -156,15 +171,17 @@ var Bamboo = (function (window, document) {
 
 		_move: function(e) {
 			if (!this.initiated) return;
+			if (isTouch !== /touch/.test(e.type)) return;
 			if (this.desktop || !this.options.menu || !this.options.swipeToOpen) return; // if menu not applicable
 
-			var point = hasTouch ? e.originalEvent.touches[0] : e;
+			var point = isTouch ? e.originalEvent.touches[0] : e;
 			
 			this.stepsX += Math.abs(point.pageX - this.pointX);
 			this.stepsY += Math.abs(point.pageY - this.pointY);
 
 			// We take a 10px buffer to figure out the direction of the swipe
 			if (this.stepsX < 10 && this.stepsY < 10) {
+				this.initiated = false;
 				return;
 			}
 
@@ -188,16 +205,19 @@ var Bamboo = (function (window, document) {
 
 		_end: function(e) {
 			if (!this.initiated) return;
+			if (isTouch !== /touch/.test(e.type)) return;
 			if (this.desktop || !this.options.menu) return; // if menu not applicable
-	
-			var point = hasTouch ? e.originalEvent.changedTouches[0] : e;
-			var nx = parseInt(point.pageX) - this.ox;
+			
+			var point = isTouch ? e.originalEvent.changedTouches[0] : e,
+				nx = parseInt(point.pageX) - this.ox;
+
 			// choose direction based on dx	
 			if (this.dx <= 0) {
 				this._animateTo(nx, 0);
 			} else {
 				this._animateTo(nx, this.options.menuWidth);
 			}
+
 			// open button
 			if (this.dx === 0 && nx === 0 && this.tgt.is('.open')) {
 				this._animateTo(this.options.menuWidth, this.options.menuWidth);
@@ -215,11 +235,10 @@ var Bamboo = (function (window, document) {
 				'transform' : 'translate(' + to + 'px,0)' + translateZ
 			});
 			// hide / show cover
-			this._toggleCover(to);
+			//this._toggleCover(to);
 		},
 
 		_moveContainer: function(x){
-			//container.style[transform] = 'translate(' + x + 'px,0)' + translateZ;
 			container.css({
 				'transform' : 'translate(' + x + 'px,0)' + translateZ
 			})
@@ -251,7 +270,7 @@ var Bamboo = (function (window, document) {
 		return bool;
 	}
 
-	// if mobile safari figure out thee address bar height offset
+	// if mobile safari - figure out thee address bar height offset
 	// read the Question here: http://forum.jquery.com/topic/window-height-mobile-safari-and-the-iphone-address-bar
 	// this is the answer to the issue
 	function testOffset(){
