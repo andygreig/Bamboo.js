@@ -149,6 +149,14 @@ var Bamboo = (function (window, document) {
                     $body.off('.bmboo');
                 });
             });
+
+            $('.open').on('click', function () {
+                if (_this.x > 0) {
+                    _this._animateTo(0, 0);
+                } else {
+                    _this._animateTo(_this.options.menuWidth, _this.options.menuWidth);
+                }
+            });
         },
 
         _start: function (e) {
