@@ -13,6 +13,7 @@ var Bamboo = (function (window, document) {
 	openButton = $('.open'),
 	container = $('#container'),
 	cover = null,
+	open = false,
 	
 	// Browser checks
 	hasTouch = testTouch(),
@@ -179,6 +180,12 @@ var Bamboo = (function (window, document) {
 			this.stepsX += Math.abs(point.pageX - this.pointX);
 			this.stepsY += Math.abs(point.pageY - this.pointY);
 
+			// Prevent Left Swipe
+			if (point.pageX < this.pointX && !open) {
+				this.initiated = false;
+				return;
+			};
+
 			// We take a 10px buffer to figure out the direction of the swipe
 			if (this.stepsX < 10 && this.stepsY < 10) {
 				this.initiated = false;
@@ -213,14 +220,17 @@ var Bamboo = (function (window, document) {
 
 			// choose direction based on dx	
 			if (this.dx <= 0) {
+				open = false;
 				this._animateTo(nx, 0);
 			} else {
+				open = true;
 				this._animateTo(nx, this.options.menuWidth);
 			}
 
 			// open button
 			if (this.dx === 0 && nx === 0 && this.tgt.is('.open')) {
 				this._animateTo(this.options.menuWidth, this.options.menuWidth);
+				open = !open;
 			}
 
 			this.ox = null;
