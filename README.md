@@ -30,8 +30,7 @@ Include the Bamboo.js Script, CSS file and use the index.html as the base.
                 <!-- Content ends -->
             </div>
         </section>
-
-    </div&gt;
+</div>
 
     <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
     <script src="js/bamboo.0.1.js"></script>
